@@ -1,5 +1,5 @@
 //import QuizList from "../../components/Dashboard/QuizList/QuizList";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../utils";
@@ -84,65 +84,69 @@ const ScoreBoard = () => {
                     Scoreboard
                 </h1>
                 <section className="bg-[#0A4975] min-h-[78vh] py-10 lg:py-16 text-center" >
-                    <div className="mx-auto w-full max-w-[600px] px-10 ">
-                        <h2 className="text-white font-bold text-base lg:text-lg mb-8" >
-                            Keep the streak alive!
-                        </h2>
+                    { result &&
+                        <div className="mx-auto w-full max-w-[600px] px-10 ">
+                            <h2 className="text-white font-bold text-base lg:text-lg mb-8" >
+                                Keep the streak alive!
+                            </h2>
 
-                        <div className="bg-[#5A0B4D] rounded-lg py-12 px-5 w-full relative mx-auto text-white font-bold" >
-                            <div className="text-left mb-4" >
-                                <h3 className="text-sm lg:text-base mb-2 ">{user?.username}</h3>
-                                <button className="flex gap-1 items-center justify-center px-2.5 py-0.5 border border-[#16364D] rounded-full"
-                                    style={{ 'background': 'linear-gradient(90deg, #0A4975 52.5%, #1389DB 87%)' }} >
-                                    <img src="/noto_coin.svg" alt="coin" />
-                                    <span>
-                                        {result?.score + "/" + result?.totalPossiblePoints } points
-                                    </span> 
-                                </button>
+                            <div className="bg-[#5A0B4D] rounded-lg py-12 px-5 w-full relative mx-auto text-white font-bold" >
+                                <div className="text-left mb-4" >
+                                    <h3 className="text-sm lg:text-base mb-2 ">{user?.username}</h3>
+                                    <button className="flex gap-1 items-center justify-center px-2.5 py-0.5 border border-[#16364D] rounded-full"
+                                        style={{ 'background': 'linear-gradient(90deg, #0A4975 52.5%, #1389DB 87%)' }} >
+                                        <img src="/noto_coin.svg" alt="coin" />
+                                        <span>
+                                            {result?.score + "/" + result?.totalPossiblePoints } points
+                                        </span> 
+                                    </button>
+                                </div>
+
+                                <p className="" >                                
+                                    {
+                                        passStatus === "Passed" ? "Hurray, you did great, well done!" :
+                                        passStatus === "Halfway" ? "You can always go higher, keep practicing!" :
+                                        passStatus === "Failed" ? "Thats’s poor, but you can keep trying!" : ""
+                                    }
+                                </p>
+
+                                <img
+                                    src=
+                                    {
+                                        passStatus === "Passed" ? "/Group 6.png" :
+                                        passStatus === "Halfway" ? "/amico.png" :
+                                        passStatus === "Failed" ? "/rafiki.png" : ""
+                                    }
+                                    alt="" className="absolute transform -translate-x-1/2 left-1/2"
+                                />                            
                             </div>
 
-                            <p className="" >                                
-                                {
-                                    passStatus === "Passed" ? "Hurray, you did great, well done!" :
-                                    passStatus === "Halfway" ? "You can always go higher, keep practicing!" :
-                                    passStatus === "Failed" ? "Thats’s poor, but you can keep trying!" : ""
-                                }
-                            </p>
-
-                            <img
-                                src=
-                                {
-                                    passStatus === "Passed" ? "/Group 6.png" :
-                                    passStatus === "Halfway" ? "/amico.png" :
-                                    passStatus === "Failed" ? "/rafiki.png" : ""
-                                }
-                                alt="" className="absolute transform -translate-x-1/2 left-1/2"
-                            />                            
-                        </div>
-
-                        <button className="bg-white w-full mt-44 font-bold py-3 md:py-4 rounded-2xl text-[#5A0B4D]" >
-                            Take a new quiz
-                        </button>
-
-                        <div className="mt-5 text-white font-bold" >
-                            <h4 className="lg:text-xl mb-5" >
-                                Performance stats
-                            </h4>
-
-                            <div className="flex justify-between gap-14" >
-                                <button className="relative flex flex-col items-center justify-center bg-[#5A0B4D] px-6 py-3 md:py-6 rounded-2xl w-full flex-1" >
-                                    <img src="/incorrect.svg" alt="" className="absolute left-0 bottom-0 z-0 max-w-[60%] md:max-w-none" />
-                                    <span className="text-sm lg:text-lg z-10" >{result?.incorrectAnswersCount}</span>
-                                    <span className="text-sm lg:text-lg z-10" > incorrect answers</span>
+                            <Link to="/dashboard/quizzes" >
+                                <button className="bg-white w-full mt-44 font-bold py-3 md:py-4 rounded-2xl text-[#5A0B4D]" >
+                                    Take a new quiz
                                 </button>
-                                <button className="relative flex flex-col items-center justify-center bg-[#5A0B4D] px-6 py-3 md:py-6 rounded-2xl w-full flex-1" >
-                                    <img src="/correct.svg" alt="" className="absolute left-0 bottom-0 z-0 max-w-[40%] md:max-w-none" />
-                                    <span className="text-sm lg:text-lg z-10" >{result?.correctAnswersCount}</span>
-                                    <span className="text-sm lg:text-lg z-10" > correct answers</span>
-                                </button>
+                            </Link>
+
+                            <div className="mt-5 text-white font-bold" >
+                                <h4 className="lg:text-xl mb-5" >
+                                    Performance stats
+                                </h4>
+
+                                <div className="flex justify-between gap-14" >
+                                    <button className="relative flex flex-col items-center justify-center bg-[#5A0B4D] px-6 py-3 md:py-6 rounded-2xl w-full flex-1" >
+                                        <img src="/incorrect.svg" alt="" className="absolute left-0 bottom-0 z-0 max-w-[60%] md:max-w-none" />
+                                        <span className="text-sm lg:text-lg z-10" >{result?.incorrectAnswersCount}</span>
+                                        <span className="text-sm lg:text-lg z-10" > incorrect answers</span>
+                                    </button>
+                                    <button className="relative flex flex-col items-center justify-center bg-[#5A0B4D] px-6 py-3 md:py-6 rounded-2xl w-full flex-1" >
+                                        <img src="/correct.svg" alt="" className="absolute left-0 bottom-0 z-0 max-w-[40%] md:max-w-none" />
+                                        <span className="text-sm lg:text-lg z-10" >{result?.correctAnswersCount}</span>
+                                        <span className="text-sm lg:text-lg z-10" > correct answers</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </section>
             </div>
         </DashboardLayout>

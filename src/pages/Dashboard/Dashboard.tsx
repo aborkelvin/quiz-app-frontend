@@ -80,6 +80,7 @@ const Dashboard = () => {
               </p>
               <button
                 className="w-fit bg-[#5a0b4d] text-white px-3 py-1.5 rounded text-sm"
+                onClick={() => navigate('/dashboard/activities')}
                 >
                 Saved
               </button>

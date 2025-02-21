@@ -4,8 +4,35 @@ import toast, { Toaster } from "react-hot-toast";
 import { baseUrl } from "../../utils";
 
 const QuizTakingPage = () => {
-  const navigate = useNavigate();
+  
   const { id } = useParams();
+
+  // Authenticate user first
+  //const [user, setUser] = useState<any>(null);
+  //const [token, setToken] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    const storedUser = JSON.parse(sessionStorage.getItem("user") as string);
+    const storedToken = sessionStorage.getItem("token");
+
+    if (!storedUser || !storedToken) {
+      toast.error("Please signin or signup to take this quiz.");
+      sessionStorage.setItem("redirectPath", `/take-quiz/${id}`);
+      setTimeout(() => {
+        navigate("/signin")
+      }, 3000);
+      return;
+    }
+
+    //setUser(storedUser);
+    //setToken(storedToken);
+  }, []);
+
+
+  
+  
+  
+  
   
   // Load questions from session storage or API
   const storedQuestions = JSON.parse(sessionStorage.getItem("previewQuestions") as string) || [];
@@ -58,8 +85,17 @@ const QuizTakingPage = () => {
       const startData = await startResponse.json();
       console.log(startData)
       
+      
+
       if (!startResponse.ok) {
         toast.error(startData.message || "Failed to start quiz");
+        return;
+      }
+
+      if (startData.attempts > 0) {
+        toast.success(`You can attempt this quiz ${10 - startData.attempts} more times.`,{duration: 10000});
+      } else {
+        toast.error("You have exhausted your attempts for this quiz.", {duration: 10000});
         return;
       }
       
@@ -155,15 +191,15 @@ const QuizTakingPage = () => {
   
   // Submit Quiz
   const handleSubmitQuiz = async () => {
-    if (selectedAnswers.length < questions.length && timeLeft > 0) {
-      toast.error("Please answer all questions before submitting.");
+    /* if (selectedAnswers.length < questions.length && timeLeft > 0) {
+      //toast.error("Please answer all questions before submitting.");
 
       //Show unanswered question numbers
       const unansweredQuestions = questions.filter((q:any) => !selectedAnswers.find((ans) => ans.questionId === q._id));
       const unansweredQuestionNumbers = unansweredQuestions.map((q:any) => questions.indexOf(q) + 1);
       toast.error(`You have not answered questions ${unansweredQuestionNumbers.join(", ")}`);
-      return;
-    }
+      //return;
+    } */
     
     console.log("Submitting answers:", selectedAnswers);
     const toastId = toast.loading("Submitting quiz...");
@@ -315,18 +351,19 @@ const QuizTakingPage = () => {
                   ))}
                 </div>
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-6">
+                <div className="flex justify-center gap-8 mt-6">
                   <button
                     onClick={handleBack}
                     disabled={currentIndex === 0}
-                    className={`px-4 py-2 rounded ${currentIndex === 0 ? "bg-gray-300" : "bg-gray-600 text-white"}`}
+                    className={`px-6 py-1.5 rounded ${currentIndex === 0 ?"bg-gray-300" : "bg-white text-black border-[#888787] border"}`}
                   >
                     Back
                   </button>
+                  
                   <button
                     onClick={handleNext}
                     disabled={currentIndex === questions.length - 1}
-                    className={`px-4 py-2 rounded ${currentIndex === questions.length - 1 ? "bg-gray-300" : "bg-blue-600 text-white"}`}
+                    className={`px-6 py-1.5 rounded ${currentIndex === questions.length - 1 ? "bg-gray-300" : "bg-white text-black border-[#888787] border"}`}
                   >
                     Next
                   </button>
@@ -341,7 +378,18 @@ const QuizTakingPage = () => {
                 )} */}
                 
                 <div className="text-center mt-6">
-                  <button onClick={() => setShowConfirmSubmission(true)} className="bg-green-600 text-white px-6 py-2 rounded">
+                  <button onClick={() => {
+                    if (selectedAnswers.length < questions.length && timeLeft > 0) {
+                      //toast.error("Please answer all questions before submitting.");
+
+                      //Show unanswered question numbers
+                      const unansweredQuestions = questions.filter((q:any) => !selectedAnswers.find((ans) => ans.questionId === q._id));
+                      const unansweredQuestionNumbers = unansweredQuestions.map((q:any) => questions.indexOf(q) + 1);
+                      toast.error(`You have not answered questions ${unansweredQuestionNumbers.join(", ")}`);
+                      //return;
+                    }
+                    setShowConfirmSubmission(true)
+                  }} className="bg-green-600 hover:bg-[#338F52] text-white px-6 py-2 rounded">
                     Submit
                   </button>
                 </div>                

@@ -43,7 +43,7 @@ const DashboardQuizzes = () => {
       .catch(() => {
         toast.error("Failed to load quizzes", { id: toastId });
       });
-  }, [token]);
+  }, []);
 
 
     return (

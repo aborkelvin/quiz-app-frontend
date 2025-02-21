@@ -1,15 +1,15 @@
 import { ReactNode, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Home, CreditCard, Award, Activity, LogOut } from "lucide-react";
+import { Home, CreditCard, Activity, LogOut } from "lucide-react";
 import { MdMenu, MdClose } from 'react-icons/md';
 import { toast } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 
 const menuItems = [
   { name: "Home", icon: <Home size={20} />, path: "/dashboard/home" },
-  { name: "Activities", icon: <Activity size={20} />, path: "#" },
+  { name: "Activities", icon: <Activity size={20} />, path: "/dashboard/activities" },
   { name: "Quizzes", icon: <CreditCard size={20} />, path: "/dashboard/quizzes" },
-  { name: "Certificates", icon: <Award size={20} />, path:  "#" },
+  /* { name: "Certificates", icon: <Award size={20} />, path:  "#" }, */
 ];
 
 const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: () => void }) => {
@@ -77,57 +77,70 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: ()
 
 
 const Header = ({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: () => void }) => {
-    const navigate = useNavigate();
-    return (
-        <header className="fixed top-0 left-0 w-full bg-white text-black px-6 md:px-16 py-2 
-        flex justify-end md:justify-between items-center z-10 shadow h-16"
-        >            
-            <div className="hidden md:flex items-center gap-7">
-                <img src="/Group 2 anyi[1].png" alt="Company Logo" className="max-w-14" />
-                <NavLink to="/dashboard/home" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
-                    <div className="flex items-center gap-2">
-                        <Home size={16} />
-                        <h1 className="text-lg">
-                            Home
-                        </h1>
-                    </div>
-                </NavLink>
-                <NavLink to="/dashboard/activities" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
-                    <div className="flex items-center gap-2">
-                        <img src="/activity.svg" alt="activity" className="w-4" />
-                        <h1 className="text-lg">
-                            Activity
-                        </h1>
-                    </div>
-                </NavLink>
-                <NavLink to="/dashboard/quizzes" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
-                    <div className="flex items-center gap-2">
-                        <img src="/quiz.svg" alt="quiz" className="w-4" />
-                        <h1 className="text-lg">
-                            Quizes
-                        </h1>
-                    </div>
-                </NavLink>
-                
-            </div>            
-                
-            {/* Icons and Profile */}
-            <div className="flex items-center space-x-4">        
-                <button
-                    className="w-fit bg-[#5a0b4d] text-white px-4 py-1.5 rounded block mx-auto"
-                    onClick={() => navigate('/create-quiz')}
-                >
-                Create
-                </button>
-                {/* Mobile Menu Button */}
-                <button className="md:hidden" onClick={toggleSidebar}>
-                {isOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
-                </button>
-            </div>
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.clear();
+    toast.success("Logged out successfully.");
+    setTimeout(() => {
+        navigate("/signin");
+    }, 1000);
+  };
+  return (
+      <header className="fixed top-0 left-0 w-full bg-white text-black px-6 md:px-16 py-2 
+      flex justify-end md:justify-between items-center z-10 shadow h-16"
+      >            
+          <div className="hidden md:flex items-center gap-7">
+              <img src="/Group 2 anyi[1].png" alt="Company Logo" className="max-w-14" />
+              <NavLink to="/dashboard/home" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
+                  <div className="flex items-center gap-2">
+                      <Home size={16} />
+                      <h1 className="text-lg">
+                          Home
+                      </h1>
+                  </div>
+              </NavLink>
+              <NavLink to="/dashboard/activities" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
+                  <div className="flex items-center gap-2">
+                      <img src="/activity.svg" alt="activity" className="w-4" />
+                      <h1 className="text-lg">
+                          Activity
+                      </h1>
+                  </div>
+              </NavLink>
+              <NavLink to="/dashboard/quizzes" className={({isActive}) => `${isActive ? 'font-bold' : 'font-normal'}`} >
+                  <div className="flex items-center gap-2">
+                      <img src="/quiz.svg" alt="quiz" className="w-4" />
+                      <h1 className="text-lg">
+                          Quizes
+                      </h1>
+                  </div>
+              </NavLink>
+              
+          </div>            
+              
+          {/* Icons and Profile */}
+          <div className="flex items-center space-x-4">        
+              <button
+                  className="w-fit bg-[#5a0b4d] text-white px-4 py-1.5 rounded block mx-auto"
+                  onClick={() => navigate('/create-quiz')}
+              >
+              Create
+              </button>
+              <button
+                  className="w-fit border-[#5a0b4d] border text-black px-4 py-1.5 rounded mx-auto hidden md:block"
+                  onClick={handleLogout}
+              >
+              Logout
+              </button>
+              {/* Mobile Menu Button */}
+              <button className="md:hidden" onClick={toggleSidebar}>
+              {isOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+              </button>
+          </div>
 
-        
-        </header>
-    );
+      
+      </header>
+  );
 };
 
 

@@ -228,7 +228,7 @@ const QuizCreationPage = () => {
                     </button>
                 </div>
                 {/* Mobile Menu Button */}
-              //{/* <button className="md:hidden text-2xl" onClick={() => setSidebarOpen(true)}>
+              {/* <button className="md:hidden text-2xl" onClick={() => setSidebarOpen(true)}>
                 <FiMenu />
               </button> */}
             </div>

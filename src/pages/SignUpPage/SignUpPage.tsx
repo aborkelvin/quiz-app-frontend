@@ -58,7 +58,18 @@ const SignUp = () => {
         sessionStorage.setItem('token', data.token);
         sessionStorage.setItem('user', JSON.stringify(data.user));
         toast.success('Signup successful! Redirecting to main page...');
-        navigate('/dashboard/home');
+        
+        const redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath) {
+            sessionStorage.removeItem('redirectPath');
+            setTimeout(() => {
+                navigate(redirectPath);
+            }, 1000);
+        } else {
+            navigate('/dashboard/home');
+        }
+
+        
       } else {
         toast.error(data.message || 'Signup failed. Please try again.');
       }

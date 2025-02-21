@@ -141,21 +141,16 @@ const QuizPreviewPage = () => {
                     <img src="/Frame 258.png" alt="" />
                     <h1 className="text-2xl font-bold">{quizDetails.title || "Untitled Quiz"}</h1>
                   </div>
-                  <div className="flex space-x-3 md:space-x-6">
+                  {/* <div className="flex space-x-3 md:space-x-6">
                       <button className="border border-[#5A0B4D] px-6 py-1 rounded-sm">Edit</button>
                       <button className="border border-[#5A0B4D] px-6 py-1 rounded-sm">Share</button>
-                  </div>
+                  </div> */}
               </div>
               {/* Loop Through Questions */}
               {questions.map((question: any, qIndex: number) => (
                 <div className="">
-                    <div key={qIndex} className="border border-[#C6C3C3] p-6 mb-4">
-                      {/* Question Settings (Timer, Points) */}
-                      {/* <div className="flex items-center justify-between text-sm text-gray-600">
-                        <div>❏ {question.type || "Multiple Choice"}</div>
-                        <div>{quizDetails.timer || 30} seconds</div>
-                        <div>{quizDetails.pointsPerQuestion || 3} Points</div>
-                      </div> */}
+                    <div key={qIndex} className="border border-[#C6C3C3] p-6">
+
                       {/* Question Text */}
                       <h3 className="text-lg font-semibold mt-1">{question.title}?</h3>
                       {/* Answer Options */}
@@ -175,10 +170,7 @@ const QuizPreviewPage = () => {
                         </div>
                       </div>
                 </div>
-                  {/* Edit Button */}
-                  {/* <button className="mt-2 text-sm text-blue-600 flex items-center">
-                    ✏️ Edit
-                  </button> */}
+
                 </div>
               ))}
             </div>

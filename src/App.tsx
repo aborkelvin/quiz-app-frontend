@@ -10,6 +10,7 @@ import QuizPreviewPage from "./pages/PreviewPage/PreviewPage";
 import DashboardQuizzes from "./pages/DashboardQuizzes/DashboardQuizzes";
 import QuizTakingPage from "./pages/QuizTakingPage/QuizTakingPage";
 import ScoreBoard from "./pages/ScoreBoard/ScoreBoard";
+import Activities from "./pages/Activities/Activities";
 /* import Dashboard from "./pages/Dashboard";
 import PageOne from "./pages/PageOne"; // Quiz questions page
 import PageTwo from "./pages/PageTwo"; // Quiz settings page
@@ -30,8 +31,9 @@ function App() {
         <Route path="/create-quiz" element={<ProtectedRoute><QuizSettings /></ProtectedRoute>} />
         <Route path="/preview-quiz" element={<ProtectedRoute><QuizPreviewPage /></ProtectedRoute>} />
         <Route path="/dashboard/quizzes" element={<ProtectedRoute><DashboardQuizzes /></ProtectedRoute>} />        
-        <Route path="/take-quiz/:id" element={<ProtectedRoute><QuizTakingPage /></ProtectedRoute>} />
-        <Route path="/score-board/:id" element = {<ProtectedRoute><ScoreBoard /> </ProtectedRoute>} />
+        <Route path="/take-quiz/:id" element={<QuizTakingPage />} />
+        <Route path="/score-board/:id" element={<ProtectedRoute><ScoreBoard /> </ProtectedRoute>} />
+        <Route path="/dashboard/activities" element = {<ProtectedRoute><Activities /> </ProtectedRoute>} />
         {/* <Route path="/result/:id" element
         
         <Route path="/" element={<SignIn />} />
