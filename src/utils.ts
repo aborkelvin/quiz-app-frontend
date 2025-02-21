@@ -1,6 +1,6 @@
 
-//export const baseUrl = `https://quiz-app-pg8t.onrender.com`
-export const baseUrl = `http://localhost:6060`
+export const baseUrl = `https://quiz-app-pg8t.onrender.com`
+//export const baseUrl = `http://localhost:6060`
 
 
 
