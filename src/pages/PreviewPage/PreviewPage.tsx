@@ -120,7 +120,7 @@ const QuizPreviewPage = () => {
               <button 
                 onClick={publishQuiz}
                 className="bg-[#5a0b4d] text-white px-3 py-1 flex items-center gap-1 rounded">
-                  <img src="public/upload.svg" alt="upload icon" />
+                  <img src="/upload.svg" alt="upload icon" />
                   Publish
               </button>
           </div>
